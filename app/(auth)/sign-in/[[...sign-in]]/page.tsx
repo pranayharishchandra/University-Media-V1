@@ -1,5 +1,11 @@
 import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
-  return <SignIn />;
+  return (
+    <main className="flex justify-center items-center min-h-screen bg-dark-1 px-4">
+      <div className="w-full max-w-md">
+        <SignIn />
+      </div>
+    </main>
+  );
 }
