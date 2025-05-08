@@ -11,6 +11,7 @@ interface Props {
   content: string;
   author: {
     name: string;
+    designation: string;
     image: string;
     id: string;
   };
@@ -61,10 +62,16 @@ function ThreadCard({
           </div>
 
           <div className='flex w-full flex-col'>
-            <Link href={`/profile/${author.id}`} className='w-fit'>
-              <h4 className='cursor-pointer text-base-semibold text-light-1'>
-                {author.name}
-              </h4>
+
+          <Link href={`/profile/${author.id}`} className='w-fit'>
+              <div className='flex items-center gap-2'>
+                <h4 className='cursor-pointer text-base-semibold text-light-1'>
+                  {author.name}
+                </h4>
+                <span className='cursor-pointer text-small-regular text-light-2'>
+                  ( {author.designation} )
+                </span>
+              </div>
             </Link>
 
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>

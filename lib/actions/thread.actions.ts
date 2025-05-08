@@ -32,7 +32,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       populate: {
         path: "author", // Populate the author field within children
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
+        select: "_id name designation parentId image", // Select only _id and username fields of the author
       },
     });
 /*
@@ -171,7 +171,7 @@ export async function fetchThreadById(threadId: string) {
       .populate({
         path  : "author",              //* authour is a field in Thread model, in which "_id id name image" of "model:User" will get pushed into
         model : User,
-        select: "_id id name image",   //* "_id, id, name, image" of "model:User" are the fields that will be under one object and that object can accessed by  "author fild" and this author field will be used to access these properties "_id id name image"
+        select: "_id id name designation image",   //* "_id, id, name, image" of "model:User" are the fields that will be under one object and that object can accessed by  "author fild" and this author field will be used to access these properties "_id id name image"
 
         /*
         *Yes, in the provided code snippet, when you populate the "author" field in the Thread model with the User model, the fields "id, id, name, image" from the User model will be fetched and stored under the "author" field in the Thread document. This allows you to access these properties like "_id, id, name, image" through the "author" field in the Thread document. 
@@ -180,7 +180,7 @@ export async function fetchThreadById(threadId: string) {
       .populate({
         path  : "community",
         model : Community,
-        select: "_id id name image",
+        select: "_id id name designation image",
       }) // Populate the community field with _id and name
 
       //* populating for comments(childre) under a post(parent)
@@ -191,7 +191,7 @@ export async function fetchThreadById(threadId: string) {
           {
             path  : "author",                       // Populate the author field within children
             model : User,
-            select: "_id id name parentId image",   // Select only _id and username fields of the author
+            select: "_id id name designation parentId image",   // Select only _id and username fields of the author
           },
 
           //* "we are populating children by children" | "children means comments" | "here we are doing comments under comments" | :i.e. RECURSION
@@ -202,7 +202,7 @@ export async function fetchThreadById(threadId: string) {
             populate: {
                   path  : "author",                       // Populate the author field within nested children
                   model : User,
-                  select: "_id id name parentId image",   // Select only _id and username fields of the author
+                  select: "_id id name designation parentId image",   // Select only _id and username fields of the author
             },
           },
         ],

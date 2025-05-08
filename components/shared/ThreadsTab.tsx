@@ -7,6 +7,7 @@ import ThreadCard from "../cards/ThreadCard";
 
 interface Result {
   name: string;
+  designation: string;
   image: string;
   id: string;
   threads: {
@@ -15,6 +16,7 @@ interface Result {
     parentId: string | null;
     author: {
       name: string;
+      designation: string;
       image: string;
       id: string;
     };
@@ -52,7 +54,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
   }
 
   return (
-    <section className='mt-9 flex flex-col gap-10'>
+    <section className="mt-9 flex flex-col gap-10">
       {result.threads.map((thread) => (
         <ThreadCard
           key={thread._id}
@@ -62,9 +64,15 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           content={thread.text}
           author={
             accountType === "User"
-              ? { name: result.name, image: result.image, id: result.id }
+              ? {
+                  name: result.name,
+                  designation: result.designation,
+                  image: result.image,
+                  id: result.id,
+                }
               : {
                   name: thread.author.name,
+                  designation: thread.author.designation,
                   image: thread.author.image,
                   id: thread.author.id,
                 }
