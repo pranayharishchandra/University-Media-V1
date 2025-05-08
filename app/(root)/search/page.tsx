@@ -42,6 +42,7 @@ async function Page({
                 id={person.id}
                 name={person.name}
                 username={person.username}
+                designation={person.designation}
                 imgUrl={person.image}
                 personType='User'
               />

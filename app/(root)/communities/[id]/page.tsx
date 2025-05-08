@@ -24,6 +24,7 @@ async function Page({ params }: { params: { id: string } }) {
         name={communityDetails.name}
         username={communityDetails.username}
         imgUrl={communityDetails.image}
+        designation={communityDetails.designation}
         bio={communityDetails.bio}
         type='Community'
       />
@@ -68,6 +69,7 @@ async function Page({ params }: { params: { id: string } }) {
                   id={member.id}
                   name={member.name}
                   username={member.username}
+                  designation={member.designation}
                   imgUrl={member.image}
                   personType='User'
                 />

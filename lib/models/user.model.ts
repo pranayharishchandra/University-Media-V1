@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  designation: {
+    type: String,
+    default: "student",
+  },  
   communities: [
     {
       type: mongoose.Schema.Types.ObjectId,

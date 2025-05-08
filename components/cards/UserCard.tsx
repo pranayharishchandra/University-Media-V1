@@ -8,12 +8,13 @@ import { Button } from "../ui/button";
 interface Props {
   id: string;
   name: string;
+  designation: string;
   username: string;
   imgUrl: string;
   personType: string;
 }
 
-function UserCard({ id, name, username, imgUrl, personType }: Props) {
+function UserCard({ id, name, username, designation, imgUrl, personType }: Props) {
   const router = useRouter();
 
   const isCommunity = personType === "Community";
@@ -32,7 +33,8 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
 
         <div className='flex-1 text-ellipsis'>
           <h4 className='text-base-semibold text-light-1'>{name}</h4>
-          <p className='text-small-medium text-gray-1'>@{username}</p>
+          <p className='text-small-medium text-gray-1'>| @{username}</p>
+          <p className='text-small-medium text-gray-1'> | {designation}</p>
         </div>
       </div>
 

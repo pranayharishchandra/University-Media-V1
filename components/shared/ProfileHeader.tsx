@@ -8,6 +8,7 @@ interface Props {
   username: string;
   imgUrl: string;
   bio: string;
+  designation: string;
   type?: string;
 }
 
@@ -17,6 +18,7 @@ function ProfileHeader({
   name,
   username,
   imgUrl,
+  designation,
   bio,
   type,
 }: Props) {
@@ -37,7 +39,8 @@ function ProfileHeader({
             <h2 className='text-left text-heading3-bold text-light-1'>
               {name}
             </h2>
-            <p className='text-base-medium text-gray-1'>@{username}</p>
+            <p className='text-base-medium text-gray-1'>username: {username}</p>
+            <p className='text-base-medium text-gray-1'>designation: {designation}</p>
           </div>
         </div>
         {accountId === authUserId && type !== "Community" && (

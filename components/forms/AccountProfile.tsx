@@ -31,6 +31,7 @@ interface Props {
     objectId: string;
     username: string;
     name: string;
+    designation: string;
     bio: string;
     image: string;
   };
@@ -50,6 +51,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       profile_photo: user?.image ? user.image : "",
       name: user?.name ? user.name : "",
       username: user?.username ? user.username : "",
+      designation: user?.designation ? user.designation : "",
       bio: user?.bio ? user.bio : "",
     },
   });
@@ -71,6 +73,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       path: pathname,
       username: values.username,
       userId: user.id,
+      designation: values.designation,
       bio: values.bio,
       image: values.profile_photo,
     });
@@ -188,6 +191,28 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name='designation'
+          render={({ field }) => (
+            <FormItem className='flex w-full flex-col gap-3'>
+              <FormLabel className='text-base-semibold text-light-2'>
+                Designation (student, teacher, etc.)
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type='text'
+                  className='account-form_input no-focus'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        
 
         <FormField
           control={form.control}

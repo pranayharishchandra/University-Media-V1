@@ -25,6 +25,7 @@ async function Page({ params }: { params: { id: string } }) {
         name={userInfo.name}
         username={userInfo.username}
         imgUrl={userInfo.image}
+        designation={userInfo.designation}
         bio={userInfo.bio}
       />
 
