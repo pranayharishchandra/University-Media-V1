@@ -9,6 +9,8 @@ import { sidebarLinks } from "@/constants";
 function Bottombar() {
   const pathname = usePathname();
 
+  // bottom bar is for the mobile version - navigation (like instagram)
+
   return (
     <section className='bottombar'>
       <div className='bottombar_container'>

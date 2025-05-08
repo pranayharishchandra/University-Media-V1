@@ -6,15 +6,19 @@ import Link from "next/link";
 function Topbar() {
   return (
     <nav className='topbar'>
+
       <Link href='/' className='flex items-center gap-4'>
+
         <Image src='/logo.svg' alt='logo' width={28} height={28} />
         <p className='text-heading3-bold text-light-1 max-xs:hidden'>UniversityMedia</p>
+
       </Link>
 
       <div className='flex items-center gap-1'>
         <div className='block md:hidden'>
           <SignedIn>
-            <SignOutButton>
+            {/* if you are signegIn following - SignOutButton will be shown */}
+            <SignOutButton> 
               <div className='flex cursor-pointer'>
                 <Image
                   src='/assets/logout.svg'

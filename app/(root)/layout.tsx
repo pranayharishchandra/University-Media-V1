@@ -17,11 +17,7 @@ export const metadata: Metadata = {
   description: "A Next.js 13 UniversityMedia application",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children,} : {children: React.ReactNode;}) {
   return (
     <ClerkProvider
       appearance={{
