@@ -43,7 +43,7 @@ function ThreadCard({
   isComment,
 }: Props) {
 
-  console.log('image', image);
+  // console.log('image', image);
 
   return (
     <article
