@@ -27,7 +27,6 @@ interface Props {
 function PostThread({ userId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
-
   const { organization } = useOrganization();
 
   const form = useForm<z.infer<typeof ThreadValidation>>({
@@ -35,20 +34,39 @@ function PostThread({ userId }: Props) {
     defaultValues: {
       thread: "",
       accountId: userId,
+      image: undefined,
     },
   });
 
+  // Uploads image to Cloudinary and returns the URL
+  const uploadImageToCloudinary = async (image: File) => {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "umedia_preset"); 
+    formData.append("cloud_name", "dlsgdocg3");
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/dlsgdocg3/image/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    return data.secure_url;
+  };
+
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-    //* it's always a good idea to pass everything under a single object,
-    //* so you don't need to take care of the order in which you are passing
-    //* if you pass them individually, the you must make sure that their corresponding
-    //* arguements in the other file are in the same order
-    //* but don't use this approch, doen't holds good in case of large projects
+    let imageUrl = "";
+
+    // If an image is selected, upload it
+    if (values.image && values.image instanceof File) {
+      imageUrl = await uploadImageToCloudinary(values.image);
+    }
+
     await createThread({
       text: values.thread,
       author: userId,
       communityId: organization ? organization.id : null,
       path: pathname,
+      image: imageUrl, // you can now save this to your DB
     });
 
     router.push("/");
@@ -60,6 +78,7 @@ function PostThread({ userId }: Props) {
         className='mt-10 flex flex-col justify-start gap-10'
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        {/* Thread Content Field */}
         <FormField
           control={form.control}
           name='thread'
@@ -70,6 +89,28 @@ function PostThread({ userId }: Props) {
               </FormLabel>
               <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
                 <Textarea rows={15} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Image Upload Field */}
+        <FormField
+          control={form.control}
+          name='image'
+          render={({ field }) => (
+            <FormItem className='flex w-full flex-col gap-3'>
+              <FormLabel className='text-base-semibold text-light-2'>
+                Upload Image (optional)
+              </FormLabel>
+              <FormControl>
+                <input
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => field.onChange(e.target.files?.[0])}
+                  className='text-light-1'
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

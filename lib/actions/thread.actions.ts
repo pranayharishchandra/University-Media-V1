@@ -56,11 +56,12 @@ interface Params {
   author: string,
   communityId: string | null,
   path: string,
+  image?: string,
 }
 
 //* author: userId
 
-export async function createThread({ text, author, communityId, path }: Params) {
+export async function createThread({ text, image, author, communityId, path }: Params) {
   try {
     connectToDB();
 
@@ -71,6 +72,7 @@ export async function createThread({ text, author, communityId, path }: Params) 
 
     const createdThread = await Thread.create({
       text,
+      image,
       author,                       //* author: userId, 
                                     //* joining tables | Thread to User | FK PK - userId 
                                     //* we just need to give objectId, and this will act as foreign key for Thread's "author" to refer the User table of which userId is a primary key
@@ -123,7 +125,7 @@ export async function deleteThread(id: string, path: string): Promise<void> {
 
     // Get all descendant thread IDs including the main thread ID and child thread IDs
     const descendantThreadIds = [
-      id,
+    id,
       ...descendantThreads.map((thread) => thread._id),
     ];
 
@@ -169,13 +171,11 @@ export async function fetchThreadById(threadId: string) {
   try {
     const thread = await Thread.findById(threadId)
       .populate({
-        path  : "author",              //* authour is a field in Thread model, in which "_id id name image" of "model:User" will get pushed into
+        path  : "author",              
         model : User,
-        select: "_id id name designation image",   //* "_id, id, name, image" of "model:User" are the fields that will be under one object and that object can accessed by  "author fild" and this author field will be used to access these properties "_id id name image"
+        select: "_id id name designation image",   
 
-        /*
-        *Yes, in the provided code snippet, when you populate the "author" field in the Thread model with the User model, the fields "id, id, name, image" from the User model will be fetched and stored under the "author" field in the Thread document. This allows you to access these properties like "_id, id, name, image" through the "author" field in the Thread document. 
-        */
+
       })                               
       .populate({
         path  : "community",
