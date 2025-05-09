@@ -231,7 +231,8 @@ export async function addCommentToThread(
   threadId: string,
   commentText: string,
   userId: string,
-  path: string
+  path: string,
+  image = ""
 ) {
   connectToDB();
 
@@ -248,6 +249,7 @@ export async function addCommentToThread(
       text: commentText,
       author: userId,
       parentId: threadId, // Set the parentId to the original thread's ID
+      image,
     });
 
     // Save the comment thread to the database

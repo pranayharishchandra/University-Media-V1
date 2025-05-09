@@ -20,6 +20,8 @@ import { Button } from "../ui/button";
 import { CommentValidation } from "@/lib/validations/thread";
 import { addCommentToThread } from "@/lib/actions/thread.actions";
 
+import React, { useRef } from "react";
+
 interface Props {
   threadId: string;
   currentUserImg: string;
@@ -36,47 +38,79 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
     },
   });
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
     await addCommentToThread(
       threadId,
       values.thread,
       JSON.parse(currentUserId),
-      pathname
+      pathname,
+      values.image
     );
-
-    form.reset();
+  
+    form.reset(); // reset all fields including image
+  
+    // ✅ Clear the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
+  
 
   return (
     <Form {...form}>
-      <form className='comment-form' onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="comment-form" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name='thread'
+          name="thread"
           render={({ field }) => (
-            <FormItem className='flex w-full items-center gap-3'>
+            <FormItem className="flex w-full items-center gap-3">
               <FormLabel>
                 <Image
                   src={currentUserImg}
-                  alt='current_user'
+                  alt="current_user"
                   width={48}
                   height={48}
-                  className='rounded-full object-cover'
+                  className="rounded-full object-cover"
                 />
               </FormLabel>
-              <FormControl className='border-none bg-transparent'>
+              <FormControl className="border-none bg-transparent">
                 <Input
-                  type='text'
+                  type="text"
                   {...field}
-                  placeholder='Comment...'
-                  className='no-focus text-light-1 outline-none'
+                  placeholder="Comment..."
+                  className="no-focus text-light-1 outline-none"
                 />
               </FormControl>
             </FormItem>
           )}
         />
 
-        <Button type='submit' className='comment-form_btn'>
+        {/* ✅ Add file input for image */}
+        <FormField
+          control={form.control}
+          name="image"
+          render={() => (
+            <Input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef} // ✅ attach the ref
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  form.setValue("image", reader.result as string);
+                };
+                reader.readAsDataURL(file);
+              }}
+            />
+          )}
+        />
+
+        <Button type="submit" className="comment-form_btn">
           Reply
         </Button>
       </form>
