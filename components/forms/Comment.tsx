@@ -96,6 +96,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
               type="file"
               accept="image/*"
               ref={fileInputRef} // ✅ attach the ref
+              className="cursor-pointer"
               onChange={async (e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;

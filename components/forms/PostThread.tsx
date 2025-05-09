@@ -101,7 +101,7 @@ function PostThread({ userId }: Props) {
           name='image'
           render={({ field }) => (
             <FormItem className='flex w-full flex-col gap-3'>
-              <FormLabel className='text-base-semibold text-light-2'>
+              <FormLabel className='text-base-semibold text-light-2 cursor-pointer'>
                 Upload Image (optional)
               </FormLabel>
               <FormControl>
@@ -109,7 +109,7 @@ function PostThread({ userId }: Props) {
                   type='file'
                   accept='image/*'
                   onChange={(e) => field.onChange(e.target.files?.[0])}
-                  className='text-light-1'
+                  className='text-light-1 cursor-pointer'
                 />
               </FormControl>
               <FormMessage />
