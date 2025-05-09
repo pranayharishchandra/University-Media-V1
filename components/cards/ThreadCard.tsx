@@ -170,7 +170,7 @@ function ThreadCard({
       {/* createdAt for regular comments  - non-community*/}
       {/* {!isComment && !community && ( */}
       {!community && (
-        <div className="flex items-center disabled mb-7">
+        <div className={`flex items-center disabled ${isComment ? "mb-7" : "mt-5"}`}>
           <p className="text-subtle-medium text-gray-1">
             {formatDateString(createdAt)}
           </p>
