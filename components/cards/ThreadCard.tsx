@@ -42,12 +42,12 @@ function ThreadCard({
   comments,
   isComment,
 }: Props) {
-
   // console.log('image', image);
 
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
+        // isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
         isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
       }`}
     >
@@ -164,6 +164,16 @@ function ThreadCard({
               {comments.length} repl{comments.length > 1 ? "ies" : "y"}
             </p>
           </Link>
+        </div>
+      )}
+
+      {/* createdAt for regular comments  - non-community*/}
+      {/* {!isComment && !community && ( */}
+      {!community && (
+        <div className="flex items-center disabled mb-7">
+          <p className="text-subtle-medium text-gray-1">
+            {formatDateString(createdAt)}
+          </p>
         </div>
       )}
 
